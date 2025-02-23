@@ -19,12 +19,22 @@ void UHeroComponent::SetHealth(float Value)
 	{
 		if(ARaeCharacter* RaeCharacter = Cast<ARaeCharacter>(GetOwner()))
 		{
-			// RaeCharacter->Die();
+			RaeCharacter->Die();
 		}
 	}
+}
+
+void UHeroComponent::AddStamina(float Value)
+{
+	SetHealth(Stamina + Value);
 }
 
 void UHeroComponent::AddHealth(float Value)
 {
 	SetHealth(Health + Value);
+}
+
+void UHeroComponent::SetStamina(float Value)
+{
+	Stamina = FMath::Clamp(Value, 0.0f, MaxStamina);
 }

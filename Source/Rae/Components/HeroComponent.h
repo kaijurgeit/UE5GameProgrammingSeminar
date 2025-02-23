@@ -17,13 +17,21 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Rae|Hero")
 	void SetHealth(float Value);
-
 	UFUNCTION(BlueprintCallable, Category="Rae|Hero")
 	void AddHealth(float Value);
-
+	
+	UFUNCTION(BlueprintCallable, Category="Rae|Hero")
+	void AddStamina(float Value);
+	UFUNCTION(BlueprintCallable, Category="Rae|Hero")
+	void SetStamina(float Value);
+	
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, BlueprintSetter=SetHealth, Category="Rae|Hero")
 	float Health = 50.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Rae|Hero")
 	float MaxHealth = 100.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, BlueprintSetter=SetHealth, Category="Rae|Hero")
+	float Stamina = 100.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Rae|Hero")
+	float MaxStamina = 100.f;
 };
