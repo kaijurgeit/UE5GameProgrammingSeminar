@@ -4,10 +4,12 @@
 #include "RaeCharacter.h"
 
 #include "EnhancedInputComponent.h"
+#include "Components/HeroComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 ARaeCharacter::ARaeCharacter()
 {
+	HeroComponent = CreateDefaultSubobject<UHeroComponent>(TEXT("HeroComponent"));
 }
 
 void ARaeCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)

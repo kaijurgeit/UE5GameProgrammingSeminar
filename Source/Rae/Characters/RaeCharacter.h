@@ -6,6 +6,8 @@
 #include "ThirdPersonCharacter.h"
 #include "RaeCharacter.generated.h"
 
+class UHeroComponent;
+
 UCLASS()
 class RAE_API ARaeCharacter : public AThirdPersonCharacter
 {
@@ -30,7 +32,9 @@ protected:
 
 private:
 	void Interact(const FInputActionValue& Value);
-	
+
 	//~ Components
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rae|Hero", Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UHeroComponent> HeroComponent;
 	//~ End of Components
 };
