@@ -10,7 +10,11 @@ UCLASS()
 class RAE_API ARaeCharacter : public AThirdPersonCharacter
 {
 	GENERATED_BODY()
-protected:	
+public:
+	ARaeCharacter();
+	void Die();
+	
+protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
 	//~ Input Mapping Context / Input Actions
@@ -18,6 +22,15 @@ protected:
 	TObjectPtr<UInputAction> InteractAction;
 	//~ End of Input Mapping Context / Input Actions
 
-private:	
+	UPROPERTY(EditAnywhere, Category="Rae|Hero")
+	TObjectPtr<UAnimMontage> DeathAnimMontage;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rae|Hero")
+	bool bIsDead = false;
+
+private:
 	void Interact(const FInputActionValue& Value);
+	
+	//~ Components
+	//~ End of Components
 };

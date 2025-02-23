@@ -4,6 +4,11 @@
 #include "RaeCharacter.h"
 
 #include "EnhancedInputComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+
+ARaeCharacter::ARaeCharacter()
+{
+}
 
 void ARaeCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
@@ -13,6 +18,19 @@ void ARaeCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInput
 	{
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &ThisClass::Interact);
 	}
+}
+
+void ARaeCharacter::Die()
+{
+	if(bIsDead || !DeathAnimMontage) return;
+
+	bIsDead = true;
+	
+	if(UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
+	{
+		AnimInstance->Montage_Play(DeathAnimMontage);
+	}
+	GetCharacterMovement()->DisableMovement();
 }
 
 void ARaeCharacter::Interact(const FInputActionValue& Value)
