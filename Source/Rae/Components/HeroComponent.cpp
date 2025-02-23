@@ -24,11 +24,6 @@ void UHeroComponent::SetHealth(float Value)
 	}
 }
 
-void UHeroComponent::AddStamina(float Value)
-{
-	SetHealth(Stamina + Value);
-}
-
 void UHeroComponent::AddHealth(float Value)
 {
 	SetHealth(Health + Value);
@@ -37,4 +32,29 @@ void UHeroComponent::AddHealth(float Value)
 void UHeroComponent::SetStamina(float Value)
 {
 	Stamina = FMath::Clamp(Value, 0.0f, MaxStamina);
+
+	RecoverStamina();
+}
+
+void UHeroComponent::AddStamina(float Value)
+{
+	SetStamina(Stamina + Value);
+}
+
+void UHeroComponent::RecoverStamina()
+{
+	if (Stamina == MaxStamina)
+	{
+		// If stamina fully recovered, delete timer
+		GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
+	}
+	else if (!TimerHandle.IsValid())
+	{
+		// A timer delegate pointing to: AddStamina(Amount) with Amount being 1.0
+		FTimerDelegate TimerDelegate;
+		TimerDelegate.BindLambda([this]() { AddStamina(Amount); } );
+
+		// The timer that is calling the delegate at a rate of 0.1s, looping, after a first delay of 2s
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, TimerDelegate, Rate, true, FirstDelay);		
+	}	
 }

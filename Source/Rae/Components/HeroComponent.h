@@ -34,4 +34,17 @@ protected:
 	float Stamina = 100.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Rae|Hero")
 	float MaxStamina = 100.f;
+
+	UPROPERTY(EditDefaultsOnly, Category="Rae|Hero")
+	float Amount = 1.0f;
+	UPROPERTY(EditDefaultsOnly, Category="Rae|Hero")
+	float Rate = 0.1f;
+	UPROPERTY(EditDefaultsOnly, Category="Rae|Hero")
+	float FirstDelay = 2.0;
+		
+private:
+	FTimerHandle TimerHandle;
+	
+	UFUNCTION()
+	void RecoverStamina();
 };
