@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "HeroComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FAttributChangedSignature, float, Value, float, MaxValue, float, Ratio);
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class RAE_API UHeroComponent : public UActorComponent
@@ -14,6 +15,12 @@ class RAE_API UHeroComponent : public UActorComponent
 
 public:
 	UHeroComponent();
+
+	UPROPERTY(BlueprintAssignable)
+	FAttributChangedSignature OnHealthChanged;
+	
+	UPROPERTY(BlueprintAssignable)
+	FAttributChangedSignature OnStaminaChanged;
 
 	UFUNCTION(BlueprintCallable, Category="Rae|Hero")
 	void SetHealth(float Value);
@@ -24,6 +31,11 @@ public:
 	void AddStamina(float Value);
 	UFUNCTION(BlueprintCallable, Category="Rae|Hero")
 	void SetStamina(float Value);
+	
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category="Rae|Hero")
+	float HealthRatio() { return Health / MaxHealth; }	
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category="Rae|Hero")
+	float StaminaRatio() { return Stamina / MaxStamina; }
 	
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, BlueprintSetter=SetHealth, Category="Rae|Hero")

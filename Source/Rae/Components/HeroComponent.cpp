@@ -14,6 +14,7 @@ UHeroComponent::UHeroComponent()
 void UHeroComponent::SetHealth(float Value)
 {
 	Health = FMath::Clamp(Value, 0.0f, MaxHealth);
+	OnHealthChanged.Broadcast(Value, MaxHealth, HealthRatio());
 	
 	if(Health == 0)
 	{
@@ -32,6 +33,7 @@ void UHeroComponent::AddHealth(float Value)
 void UHeroComponent::SetStamina(float Value)
 {
 	Stamina = FMath::Clamp(Value, 0.0f, MaxStamina);
+	OnStaminaChanged.Broadcast(Value, MaxStamina, StaminaRatio());
 
 	RecoverStamina();
 }
