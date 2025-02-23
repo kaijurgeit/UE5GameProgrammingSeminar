@@ -4,12 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Interfaces/InteractInterface.h"
 #include "InteractActor.generated.h"
 
 class UWidgetComponent;
 
 UCLASS()
-class RAE_API AInteractActor : public AActor
+class RAE_API AInteractActor : public AActor, public IInteract
 {
 	GENERATED_BODY()
 
