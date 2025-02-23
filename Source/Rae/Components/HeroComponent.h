@@ -15,9 +15,15 @@ class RAE_API UHeroComponent : public UActorComponent
 public:
 	UHeroComponent();
 
-protected:
-	virtual void BeginPlay() override;
+	UFUNCTION(BlueprintCallable, Category="Rae|Hero")
+	void SetHealth(float Value);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Rae|Hero")
+	UFUNCTION(BlueprintCallable, Category="Rae|Hero")
+	void AddHealth(float Value);
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, BlueprintSetter=SetHealth, Category="Rae|Hero")
 	float Health = 50.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Rae|Hero")
+	float MaxHealth = 100.f;
 };
