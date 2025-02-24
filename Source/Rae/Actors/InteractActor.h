@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Interfaces/InteractInterface.h"
+#include "Interfaces/Interact.h"
 #include "InteractActor.generated.h"
 
 class UWidgetComponent;
@@ -22,4 +22,7 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rae|Interaction")
 	TObjectPtr<UWidgetComponent> InteractWidget;
+
+	// virtual void Highlight(bool bHighlighted) override;
+	virtual void Highlight_Implementation(bool bHighlighted) override;
 };

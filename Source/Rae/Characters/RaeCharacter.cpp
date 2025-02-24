@@ -12,11 +12,11 @@
 ARaeCharacter::ARaeCharacter()
 {
 	HeroComponent = CreateDefaultSubobject<UHeroComponent>(TEXT("HeroComponent"));
-	InteractionSphere = CreateDefaultSubobject<USphereComponent>("Interaction Sphere");
-	InteractionSphere->SetupAttachment(RootComponent);
-	InteractionSphere->SetCollisionProfileName("Interact");
-	InteractionSphere->SetSphereRadius(100.f);
-	InteractionSphere->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnBeginCapsuleOverlap);
+	InteractSphere = CreateDefaultSubobject<USphereComponent>("Interaction Sphere");
+	InteractSphere->SetupAttachment(RootComponent);
+	InteractSphere->SetSphereRadius(200.f);
+	InteractSphere->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnInteractSphereBeginOverlap);
+	InteractSphere->OnComponentEndOverlap.AddDynamic(this, &ThisClass::OnInteractSphereEndOverlap);
 }
 
 void ARaeCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -44,16 +44,29 @@ void ARaeCharacter::Die()
 
 void ARaeCharacter::Interact(const FInputActionValue& Value)
 {
-	// Impl. follows
+	if (IInteract* Interactable = Cast<IInteract>(InteractActor))
+	{
+		Interactable->Execute_Interact(InteractActor, this);
+	}
 }
 
 
-void ARaeCharacter::OnBeginCapsuleOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+void ARaeCharacter::OnInteractSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-		
+{		
 	if (IInteract* Interactable = Cast<IInteract>(OtherActor))
 	{
-		Interactable->Exec
+		Interactable->Execute_Highlight(OtherActor, true);
+		InteractActor = OtherActor;
+	}
+}
+
+void ARaeCharacter::OnInteractSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (IInteract* Interactable = Cast<IInteract>(OtherActor))
+	{
+		Interactable->Execute_Highlight(OtherActor, false);
+		InteractActor = nullptr;
 	}
 }

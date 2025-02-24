@@ -6,6 +6,7 @@
 #include "UObject/Interface.h"
 #include "Interact.generated.h"
 
+class ARaeCharacter;
 class APlayerCharacter;
 
 UINTERFACE()
@@ -20,8 +21,8 @@ class RAE_API IInteract
 
 public:
 	UFUNCTION(BlueprintImplementableEvent)
-	void Interact(APlayerCharacter* PlayerCharacter);
+	void Interact(ARaeCharacter* RaeCharacter);
 
-	UFUNCTION()
-	virtual void Highlight(bool bHighlighted) {};
+	UFUNCTION(BlueprintNativeEvent)
+	void Highlight(bool bHighlighted);
 };

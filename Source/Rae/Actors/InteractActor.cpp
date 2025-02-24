@@ -20,3 +20,7 @@ AInteractActor::AInteractActor()
 	InteractWidget->InitWidget();
 }
 
+void AInteractActor::Highlight_Implementation(bool bHighlighted)
+{
+	InteractWidget->SetVisibility(bHighlighted);
+}
